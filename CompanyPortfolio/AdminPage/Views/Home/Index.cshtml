@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4">Admin Paneli Ana Sayfa</h2>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Kişisel Portföy</h5>
+                    <p class="card-text">Kişisel portföyünüzü yönetin, güncelleyin ve yeni projeler ekleyin.</p>
+                    <a href="@Url.Action("Personal", "Portfolio")" class="btn btn-light">Yönet</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Kurumsal Portföy</h5>
+                    <p class="card-text">Kurumsal portföyünüzdeki içerikleri düzenleyin ve yönetin.</p>
+                    <a href="@Url.Action("Corporate", "Portfolio")" class="btn btn-light">Yönet</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Şirket Portföyü</h5>
+                    <p class="card-text">Şirket portföyünüzü görüntüleyin ve yeni bilgiler ekleyin.</p>
+                    <a href="@Url.Action("Company", "Portfolio")" class="btn btn-light">Yönet</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-header bg-secondary text-white">
+                    Genel Bilgilendirme
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Portföylerinizi buradan hızlıca yönetebilirsiniz.</li>
+                        <li>Yeni içerik eklemek için ilgili portföy bölümüne gidin.</li>
+                        <li>Güncellemeler ve bildirimler burada görüntülenecek.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header bg-dark text-white">
+                    Kısa Bilgiler
+                </div>
+                <div class="card-body">
+                    <p><strong>Son giriş:</strong> @DateTime.Now.ToString("dd.MM.yyyy HH:mm")</p>
+                    <p><strong>Aktif kullanıcı:</strong> Admin</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
