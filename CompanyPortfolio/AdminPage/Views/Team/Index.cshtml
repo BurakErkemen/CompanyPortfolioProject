@@ -1,0 +1,56 @@
+﻿@model List<AdminPage.Models.TeamModel>
+
+@{
+    ViewData["Title"] = "Ekip Üyeleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">👥 Ekip Üyeleri</h2>
+        <a asp-action="Save" class="btn btn-success">➕ Yeni Üye Ekle</a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var member in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm rounded-4 border-0">
+                        <img src="@member.ImageUrl" class="card-img-top" alt="@member.FullName" style="object-fit: cover; height: 220px;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@member.FullName</h5>
+                            <p class="text-muted mb-1">@member.Role</p>
+                            <p>@member.Description</p>
+                        </div>
+                        <div class="card-footer bg-white d-flex justify-content-between">
+                            <div>
+                                @if (!string.IsNullOrEmpty(member.LinkedInUrl))
+                                {
+                                    <a href="@member.LinkedInUrl" target="_blank" class="btn btn-outline-primary btn-sm me-1">🔗 LinkedIn</a>
+                                }
+                                @if (!string.IsNullOrEmpty(member.TwitterUrl))
+                                {
+                                    <a href="@member.TwitterUrl" target="_blank" class="btn btn-outline-info btn-sm">🐦 Twitter</a>
+                                }
+                            </div>
+                            <div>
+                                <a asp-action="Update" asp-route-id="@member.TeamId" class="btn btn-sm btn-warning">✏️</a>
+                                <form asp-action="Delete" asp-route-id="@member.TeamId" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">🗑</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-3">
+            Henüz eklenmiş bir ekip üyesi bulunmamaktadır. Yeni bir ekip üyesi eklemek için "Yeni Üye Ekle" butonunu kullanın.
+        </div>
+    }
+</div>

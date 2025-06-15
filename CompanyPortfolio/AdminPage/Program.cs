@@ -11,6 +11,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped(typeof(IFirebaseGenericRepository<>), typeof(FirebaseGenericRepository<>));
 builder.Services.AddScoped<AboutServices>();
+builder.Services.AddScoped<TeamService>();
 
 
 
