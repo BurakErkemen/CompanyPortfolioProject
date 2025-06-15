@@ -1,0 +1,57 @@
+﻿@model AdminPage.Models.AboutModel
+
+@{
+    ViewData["Title"] = "Hakkımda Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow rounded-4 border-0">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">✏️ Hakkımda Bilgisi Güncelle</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Update" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                @* Gizli alanlar *@
+                <input type="hidden" asp-for="AboutId" />
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="mb-3">
+                    <label asp-for="Text" class="form-label">Açıklama</label>
+                    <textarea asp-for="Text" class="form-control" rows="4" placeholder="Şirketiniz hakkında bir şeyler yazın..."></textarea>
+                    <span asp-validation-for="Text" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">🔙 Geri Dön</a>
+                    <button type="submit" class="btn btn-success">💾 Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        @if (TempData["Success"] != null)
+        {
+                <text>
+                    const toast = document.createElement("div");
+                    toast.className = "toast align-items-center text-bg-success border-0 show position-fixed bottom-0 end-0 m-4";
+                    toast.role = "alert";
+                    toast.innerHTML = `
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                ✅ @TempData["Success"]
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>`;
+                    document.body.appendChild(toast);
+                </text>
+        }
+    </script>
+}

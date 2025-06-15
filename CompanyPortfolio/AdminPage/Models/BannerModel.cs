@@ -1,6 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 
-namespace AdminPage.Controllers
+namespace AdminPage.Models
 {
     [FirestoreData]
     public class BannerModel

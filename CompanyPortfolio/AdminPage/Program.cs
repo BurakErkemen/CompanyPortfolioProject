@@ -1,9 +1,18 @@
+using AdminPage.Models;
+using AdminPage.Service;
+using AdminPage.Service.GenericRepository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped(typeof(IFirebaseGenericRepository<>), typeof(FirebaseGenericRepository<>));
+builder.Services.AddScoped<AboutServices>();
+
+
 
 
 //Add sessions
@@ -14,6 +23,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
 
 var app = builder.Build();
 
