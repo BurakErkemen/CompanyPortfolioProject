@@ -22,7 +22,7 @@ namespace AdminPage.Controllers
         public async Task<IActionResult> Index()
         {
             string userId = GetUserId(); // örnek olarak
-            var all = await _aboutServices.GetAllAsync("about", userId);
+            var all = await _aboutServices.GetAllAsync("About", userId);
 
             var about = all.FirstOrDefault();
             return View(about ?? new AboutModel());
@@ -34,7 +34,7 @@ namespace AdminPage.Controllers
             if (string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Authentication");
 
-            var about = await _aboutServices.GetByUserIdAsync("about", userId);
+            var about = await _aboutServices.GetByUserIdAsync("About", userId);
             return View(about ?? new AboutModel());
         }
 
@@ -49,11 +49,11 @@ namespace AdminPage.Controllers
             model.UserId = userId;
 
             if (!string.IsNullOrEmpty(model.AboutId))
-                await _aboutServices.UpdateAsync("about", model.AboutId, model, userId);
+                await _aboutServices.UpdateAsync("About", model.AboutId, model, userId);
             else
             {
                 model.CreatedAt = Timestamp.GetCurrentTimestamp();
-                await _aboutServices.AddAsync("about", model, userId);
+                await _aboutServices.AddAsync("About", model, userId);
             }
 
             TempData["Success"] = "Hakkımda bilgisi başarıyla kaydedildi.";
@@ -70,7 +70,7 @@ namespace AdminPage.Controllers
             }
 
             // Kullanıcıya ait about verisini getir
-            var about = await _aboutServices.GetByUserIdAsync("about", userId);
+            var about = await _aboutServices.GetByUserIdAsync("About", userId);
 
             // Eğer veri yoksa boş model dön
             return View(about ?? new AboutModel { UserId = userId });
@@ -88,7 +88,7 @@ namespace AdminPage.Controllers
 
 
             // Firestore'dan mevcut kaydı al (gerekirse kontrol için)
-            var existingAbout = await _aboutServices.GetByIdAsync("about", model.AboutId, userId);
+            var existingAbout = await _aboutServices.GetByIdAsync("About", model.AboutId, userId);
             if (existingAbout == null)
             {
                 ModelState.AddModelError("", "Güncellenecek kayıt bulunamadı.");
@@ -99,7 +99,7 @@ namespace AdminPage.Controllers
             model.UserId = userId;
             model.CreatedAt = Timestamp.GetCurrentTimestamp();
 
-            await _aboutServices.UpdateAsync("about", model.AboutId, model, userId);
+            await _aboutServices.UpdateAsync("About", model.AboutId, model, userId);
 
             TempData["Success"] = "Hakkımda bilgisi başarıyla güncellendi.";
             return RedirectToAction("Index");
@@ -114,7 +114,7 @@ namespace AdminPage.Controllers
             var userId = HttpContext.Session.GetString("_UserId");
             if (!string.IsNullOrEmpty(userId))
             {
-                await _aboutServices.DeleteAsync("about", id, userId);
+                await _aboutServices.DeleteAsync("About", id, userId);
                 TempData["Success"] = "Hakkımda bilgisi silindi.";
             }
             return RedirectToAction("Index");

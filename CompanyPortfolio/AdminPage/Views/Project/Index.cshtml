@@ -1,0 +1,47 @@
+﻿@model List<AdminPage.Models.ProjectsModel>
+
+@{
+    ViewData["Title"] = "Projeler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="text-primary">📁 Tüm Projeler</h3>
+        <a class="btn btn-success" asp-action="Save">➕ Yeni Proje Ekle</a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-4">
+            @foreach (var project in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm rounded-4 border-0">
+                        @if (!string.IsNullOrEmpty(project.ImageUrl))
+                        {
+                            <img src="@project.ImageUrl" class="card-img-top rounded-top-4" style="height: 200px; object-fit: cover;" alt="Proje Görseli" />
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title">@project.Title</h5>
+                            <p class="card-text">@project.Description?.Substring(0, Math.Min(100, project.Description.Length))...</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a href="@Url.Action("Update", "Project", new { projectId = project.ProjectId })" class="btn btn-sm btn-outline-primary">✏️ Güncelle</a>
+                            <form asp-action="Delete" asp-route-projectId="@project.ProjectId" method="post" onsubmit="return confirm('Bu projeyi silmek istediğinize emin misiniz?')">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">🗑 Sil</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Henüz proje eklenmemiş. Sağ üstten yeni proje ekleyebilirsiniz.
+        </div>
+    }
+</div>

@@ -1,0 +1,56 @@
+﻿@model AdminPage.Models.ProjectsModel
+
+@{
+    ViewData["Title"] = "Proje Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow rounded-4 border-0">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">📝 Proje Güncelle</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Update" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                @* Gizli alanlar *@
+                <input type="hidden" asp-for="ProjectId" />
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Proje Başlığı</label>
+                    <input asp-for="Title" class="form-control" placeholder="Örn: Kurumsal Web Sitesi" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Açıklama</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Proje açıklaması..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label">Görsel URL</label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="https://..." />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Link" class="form-label">Proje Linki</label>
+                    <input asp-for="Link" class="form-control" placeholder="https://..." />
+                    <span asp-validation-for="Link" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">🔙 Geri</a>
+                    <button type="submit" class="btn btn-primary">💾 Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

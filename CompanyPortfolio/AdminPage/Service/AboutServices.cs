@@ -9,10 +9,6 @@ namespace AdminPage.Service
             : base(config)
         {
         }
-        public Task<AboutModel?> GetLatestAsync(string userId)
-        {
-            return GetAllAsync("about", userId).ContinueWith(t => t.Result.FirstOrDefault());
-        }
 
     }
 }

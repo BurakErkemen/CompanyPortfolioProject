@@ -32,25 +32,4 @@
 </div>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-
-
-    <script>
-        // TempData'dan başarı mesajı varsa Toast göster
-        @if (TempData["Success"] != null)
-        {
-                <text>
-                const toastEl = document.createElement("div");
-                toastEl.className = "toast align-items-center text-bg-success border-0 show position-fixed bottom-0 end-0 m-4";
-                toastEl.role = "alert";
-                toastEl.innerHTML = `
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            ✅ @TempData["Success"]
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                    </div>`;
-                document.body.appendChild(toastEl);
-                </text>
-        }
-    </script>
 }

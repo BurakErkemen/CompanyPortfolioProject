@@ -54,16 +54,16 @@
                         <a class="nav-link" href="@Url.Action("Index", "Team")">👥 Ekip</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "Faq")">❓ S.S.S</a>
+                        <a class="nav-link" href="@Url.Action("Index", "Sss")">❓ S.S.S</a>
                     </li>
                 </ul>
                 <h6>PORTFÖY</h6>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "Projects")">📁 Projeler</a>
+                        <a class="nav-link" href="@Url.Action("Index", "Project")">📁 Projeler</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Categories", "Projects")">🗂 Kategoriler</a>
+                        <a class="nav-link" href="@Url.Action("Hizmetler", "Hizmetler")">🗂 Hizmetler</a>
                     </li>
                 </ul>
                 <h6>İLETİŞİM</h6>
@@ -111,6 +111,58 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
+
+
+    @{
+        var successMessage = TempData["Success"]?.ToString();
+        var errorMessage = TempData["Error"]?.ToString();
+    }
+
+
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            const showToast = (message, type = "success") => {
+                const toast = document.createElement("div");
+                const bgClass = type === "success" ? "text-bg-success" : "text-bg-danger";
+                toast.className = `toast align-items-center ${bgClass} border-0 show position-fixed bottom-0 end-0 m-4`;
+                toast.setAttribute("role", "alert");
+                toast.setAttribute("aria-live", "assertive");
+                toast.setAttribute("aria-atomic", "true");
+
+                toast.innerHTML = `
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Kapat"></button>
+                    </div>
+                `;
+
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                    toast.classList.add("hide");
+                    setTimeout(() => toast.remove(), 300);
+                }, 5000);
+            };
+
+            @* Razor’dan JS'e mesaj geçiyoruz *@
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                    <text>
+                        showToast(@Html.Raw(Json.Serialize("✅ " + successMessage)), "success");
+                    </text>
+            }
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                    <text>
+                        showToast(@Html.Raw(Json.Serialize("❌ " + errorMessage)), "error");
+                    </text>
+            }
+        });
+    </script>
 
 </body>
 </html>

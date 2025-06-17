@@ -1,4 +1,3 @@
-using AdminPage.Models;
 using AdminPage.Service;
 using AdminPage.Service.GenericRepository;
 
@@ -12,6 +11,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(typeof(IFirebaseGenericRepository<>), typeof(FirebaseGenericRepository<>));
 builder.Services.AddScoped<AboutServices>();
 builder.Services.AddScoped<TeamService>();
+builder.Services.AddScoped<SssService>();
+builder.Services.AddScoped<ProjectService>();
 
 
 

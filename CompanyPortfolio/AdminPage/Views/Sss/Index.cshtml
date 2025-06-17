@@ -1,0 +1,51 @@
+﻿@model List<AdminPage.Models.SssModel>
+
+@{
+    ViewData["Title"] = "S.S.S. Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">📚 Sıkça Sorulan Sorular</h2>
+        <a class="btn btn-success" asp-action="Save">➕ Yeni Soru Ekle</a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="list-group">
+            @foreach (var item in Model)
+            {
+                <div class="list-group-item list-group-item-action mb-2 rounded shadow-sm">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@item.Question</h5>
+                        <small class="text-muted">@item.CreatedAt.ToDateTime().ToString("dd MMM yyyy HH:mm")</small>
+                    </div>
+                    <p class="mb-1">@item.Answer</p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <div>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Pasif</span>
+                            }
+                        </div>
+                        <div>
+                            <a asp-action="Update" asp-route-id="@item.SssId" class="btn btn-sm btn-outline-primary me-1">✏️ Düzenle</a>
+                            <form asp-action="Delete" asp-route-id="@item.SssId" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">🗑 Sil</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">Henüz eklenmiş bir S.S.S. bulunmamaktadır.</div>
+    }
+</div>

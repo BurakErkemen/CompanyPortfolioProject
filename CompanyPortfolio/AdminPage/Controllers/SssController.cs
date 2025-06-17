@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdminPage.Controllers
 {
-    public class TeamController : Controller
+    public class SssController : Controller
     {
-        private readonly TeamService _teamService;
+        private readonly SssService _sssService;
 
-        public TeamController(TeamService teamService)
+        public SssController(SssService sssService)
         {
-            _teamService = teamService;
+            _sssService = sssService;
         }
 
         public async Task<IActionResult> Index()
@@ -19,56 +19,58 @@ namespace AdminPage.Controllers
             if (string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Authentication");
 
-            var list = await _teamService.GetAllAsync("Team", userId);
+            var list = await _sssService.GetActiveSssAsync(userId);
             return View(list);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Save()
+        public IActionResult Save()
         {
-            var userId = HttpContext.Session.GetString("_UserId");
-            if (string.IsNullOrEmpty(userId))
-                return RedirectToAction("Login", "Authentication");
-
-            var team = await _teamService.GetByUserIdAsync("Team", userId);
-            return View(team ?? new TeamModel());
+            return View(new SssModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(TeamModel model)
+        public async Task<IActionResult> Save(SssModel model)
         {
             var userId = HttpContext.Session.GetString("_UserId");
             if (string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Authentication");
 
+
             model.UserId = userId;
-            await _teamService.AddAsync("Team", model, userId);
-            TempData["Success"] = "Ekip üyesi başarıyla eklendi.";
-            return RedirectToAction("Index","Team");
+            await _sssService.AddAsync("SSS", model, userId);
+
+            TempData["Success"] = "S.S.S. başarıyla eklendi.";
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> Update(string id)
         {
             var userId = HttpContext.Session.GetString("_UserId");
-            var team = await _teamService.GetByIdAsync("Team", id, userId!);
-            if (team == null)
-                return RedirectToAction("Index");
+            var model = await _sssService.GetByIdAsync("SSS", id, userId!);
 
-            return View(team);
+            if (model == null)
+                return NotFound();
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(TeamModel model)
+        public async Task<IActionResult> Update(SssModel model)
         {
             var userId = HttpContext.Session.GetString("_UserId");
             if (string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Authentication");
 
+            if (!ModelState.IsValid)
+                return View(model);
 
             model.UserId = userId;
-            await _teamService.UpdateAsync("Team", model.TeamId, model, userId);
-            TempData["Success"] = "Ekip üyesi başarıyla güncellendi.";
+            await _sssService.UpdateAsync("SSS", model.SssId, model, userId);
+
+            TempData["Success"] = "S.S.S. başarıyla güncellendi.";
             return RedirectToAction("Index");
         }
 
@@ -78,8 +80,10 @@ namespace AdminPage.Controllers
             var userId = HttpContext.Session.GetString("_UserId");
             if (!string.IsNullOrEmpty(userId))
             {
-                await _teamService.DeleteAsync("Team", id, userId);
+                await _sssService.DeleteAsync("SSS", id, userId);
+                TempData["Success"] = "S.S.S. başarıyla silindi.";
             }
+
             return RedirectToAction("Index");
         }
     }

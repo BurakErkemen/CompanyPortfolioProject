@@ -6,7 +6,7 @@ namespace AdminPage.Models
     public class ProjectsModel
     {
         [FirestoreDocumentId]
-        public string AboutId { get; set; } = default!;
+        public string ProjectId { get; set; } = default!;
 
         [FirestoreProperty]
         public string UserId { get; set; } = default!;
