@@ -34,7 +34,6 @@ namespace AdminPage.Controllers
         {
             try
             {
-
                 var userId = HttpContext.Session.GetString("_UserId");
                 if (string.IsNullOrEmpty(userId))
                     return RedirectToAction("Login", "Authentication");
@@ -58,22 +57,32 @@ namespace AdminPage.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(string projectId)
         {
-            var userId = HttpContext.Session.GetString("_UserId");
-            var project = await _projectService.GetByIdAsync("Projects", projectId, userId!);
-
-            if (project == null)
+            try
             {
-                TempData["Error"] = "Proje bulunamadı.";
-                return RedirectToAction("Index");
-            }
+                var userId = HttpContext.Session.GetString("_UserId");
 
-            return View(project);
+                if (string.IsNullOrEmpty(userId))
+                    return RedirectToAction("Login", "Authentication");
+
+                var project = await _projectService.GetByIdAsync("Projects", projectId, userId!);
+
+                return View(project);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Proje bilgileri getirilirken bir hata meydana geldi. {ex.ToString()}";
+                return RedirectToAction("Index","Project");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(ProjectsModel model)
         {
             var userId = HttpContext.Session.GetString("_UserId");
+
+            if (string.IsNullOrEmpty(userId))
+                return RedirectToAction("Login", "Authentication");
+
             if (ModelState.IsValid)
             {
                 model.UserId = userId!;

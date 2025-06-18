@@ -13,6 +13,7 @@ builder.Services.AddScoped<AboutServices>();
 builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<SssService>();
 builder.Services.AddScoped<ProjectService>();
+builder.Services.AddScoped<ServicesService>();
 
 
 

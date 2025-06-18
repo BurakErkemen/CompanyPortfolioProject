@@ -1,0 +1,61 @@
+﻿@model AdminPage.Models.ServicesModel
+
+@{
+    ViewData["Title"] = "Yeni Hizmet Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow rounded-4 border-0">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">➕ Yeni Hizmet Ekle</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Save" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                @* Gizli Alanlar *@
+                <input type="hidden" asp-for="ServicesId" />
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="mb-3">
+                    <label asp-for="ServiceName" class="form-label">Hizmet Adı</label>
+                    <input asp-for="ServiceName" class="form-control" placeholder="Örn: Web Tasarımı" />
+                    <span asp-validation-for="ServiceName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ServiceDescription" class="form-label">Açıklama</label>
+                    <textarea asp-for="ServiceDescription" class="form-control" rows="3" placeholder="Bu hizmet hakkında kısa bilgi..."></textarea>
+                    <span asp-validation-for="ServiceDescription" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ServiceImage" class="form-label">Görsel URL</label>
+                    <input asp-for="ServiceImage" class="form-control" placeholder="https://..." />
+                    <span asp-validation-for="ServiceImage" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ServiceLink" class="form-label">Hizmet Bağlantısı</label>
+                    <input asp-for="ServiceLink" class="form-control" placeholder="https://..." />
+                    <span asp-validation-for="ServiceLink" class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="IsActive" class="form-check-input" />
+                    <label class="form-check-label" asp-for="IsActive">Aktif</label>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">🔙 Geri</a>
+                    <button type="submit" class="btn btn-success">💾 Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -14,6 +14,10 @@
             <form asp-action="Save" method="post">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
+                @* Kullanıcıdan alınmaması gereken alanlar (sunucu tarafında set edilir) *@
+                <input type="hidden" asp-for="ProjectId" />
+                <input type="hidden" asp-for="UserId" />
+
                 <div class="mb-3">
                     <label asp-for="Title" class="form-label">Başlık</label>
                     <input asp-for="Title" class="form-control" placeholder="Proje başlığı girin..." />
