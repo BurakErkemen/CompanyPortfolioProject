@@ -1,0 +1,51 @@
+﻿@model AdminPage.Models.ContactModel
+
+@{
+    ViewData["Title"] = "İletişim Bilgisi Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow rounded-4 border-0">
+        <div class="card-header bg-warning text-white">
+            <h4 class="mb-0">✏️ İletişim Bilgisi Güncelle</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input type="hidden" asp-for="ContactId" />
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="mb-3">
+                    <label asp-for="Tel" class="form-label"></label>
+                    <input asp-for="Tel" class="form-control" />
+                    <span asp-validation-for="Tel" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Fax" class="form-label"></label>
+                    <input asp-for="Fax" class="form-control" />
+                    <span asp-validation-for="Fax" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-outline-secondary">⬅️ Geri</a>
+                    <button type="submit" class="btn btn-primary">💾 Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

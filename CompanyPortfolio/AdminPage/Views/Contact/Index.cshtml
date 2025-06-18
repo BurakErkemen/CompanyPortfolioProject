@@ -1,0 +1,51 @@
+﻿@model List<AdminPage.Models.ContactModel>
+
+@{
+    ViewData["Title"] = "İletişim Bilgileri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool hasAnyContact = Model != null && Model.Any();
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">📇 İletişim Bilgileri</h2>
+        @if (!hasAnyContact)
+        {
+            <a asp-action="Save" class="btn btn-success">➕ Yeni Bilgi Ekle</a>
+        }
+    </div>
+
+    @if (hasAnyContact)
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title">📞 Tel: @item.Tel</h5>
+                            <p class="card-text">
+                                <strong>📧 Email:</strong> @item.Email <br />
+                                <strong>📠 Fax:</strong> @item.Fax
+                            </p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <div>
+                                <a asp-action="Update" asp-route-id="@item.ContactId" class="btn btn-sm btn-warning me-1">✏️</a>
+                                <form asp-action="Delete" asp-route-id="@item.ContactId" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">🗑</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning mt-3">
+            Henüz kayıtlı bir iletişim bilgisi bulunmamaktadır.
+        </div>
+    }
+</div>

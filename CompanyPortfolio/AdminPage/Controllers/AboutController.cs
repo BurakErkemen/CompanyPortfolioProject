@@ -86,8 +86,6 @@ namespace AdminPage.Controllers
                 return RedirectToAction("Login", "Authentication");
             }
 
-
-            // Firestore'dan mevcut kaydı al (gerekirse kontrol için)
             var existingAbout = await _aboutServices.GetByIdAsync("About", model.AboutId, userId);
             if (existingAbout == null)
             {
@@ -102,7 +100,7 @@ namespace AdminPage.Controllers
             await _aboutServices.UpdateAsync("About", model.AboutId, model, userId);
 
             TempData["Success"] = "Hakkımda bilgisi başarıyla güncellendi.";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","About");
         }
 
 

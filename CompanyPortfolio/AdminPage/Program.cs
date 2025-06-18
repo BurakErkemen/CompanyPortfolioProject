@@ -14,7 +14,8 @@ builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<SssService>();
 builder.Services.AddScoped<ProjectService>();
 builder.Services.AddScoped<ServicesService>();
-
+builder.Services.AddScoped<ContactService>();
+builder.Services.AddScoped<BannerService>();
 
 
 

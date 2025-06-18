@@ -12,13 +12,13 @@ namespace AdminPage.Models
         public string UserId { get; set; } = default!;
 
         [FirestoreProperty]
-        public string Fax { get; set; } = string.Empty;
+        public string? Fax { get; set; } = string.Empty;
 
         [FirestoreProperty]
-        public string Email { get; set; } = string.Empty;
+        public string? Email { get; set; } = string.Empty;
 
         [FirestoreProperty]
-        public string Tel { get; set; } = string.Empty;
+        public string? Tel { get; set; } = string.Empty;
 
         [FirestoreProperty]
         public Timestamp CreatedAt { get; set; } = Timestamp.GetCurrentTimestamp();

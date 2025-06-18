@@ -29,4 +29,4 @@ namespace AdminPage.Models
         [FirestoreProperty]
         public Timestamp CreatedAt { get; set; } = Timestamp.GetCurrentTimestamp();
     }
-}
+}   

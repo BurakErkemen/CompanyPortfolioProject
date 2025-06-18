@@ -1,0 +1,61 @@
+﻿@model AdminPage.Models.BannerModel
+
+@{
+    ViewData["Title"] = "Banner Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow rounded-4 border-0">
+        <div class="card-header bg-warning text-dark">
+            <h4 class="mb-0">📝 Banner Güncelle</h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- Gizli alanlar -->
+                <input type="hidden" asp-for="BannerId" />
+                <input type="hidden" asp-for="UserId" />
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" placeholder="Başlık giriniz" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Açıklama giriniz"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label"></label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="Görsel URL'si giriniz" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LinkUrl" class="form-label"></label>
+                    <input asp-for="LinkUrl" class="form-control" placeholder="Yönlendirme bağlantısı (isteğe bağlı)" />
+                    <span asp-validation-for="LinkUrl" class="text-danger"></span>
+                </div>
+
+                <div class="form-check form-switch mb-4">
+                    <input class="form-check-input" asp-for="IsActive" />
+                    <label class="form-check-label" asp-for="IsActive"></label>
+                </div>
+
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-primary">💾 Güncelle</button>
+                    <a asp-action="Index" class="btn btn-secondary ms-2">Geri Dön</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
